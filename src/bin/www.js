@@ -1,8 +1,5 @@
-/**
- * Module dependencies.
- */
-
-const app = require('../app');
+// @flow
+import {app} from '../app';
 var debug = require('debug')('study-express:server');
 var http = require('http');
 

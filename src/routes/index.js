@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
+// @flow
+import {Router} from 'express';
+import type {$Request, $Response} from 'express';
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
+export const router: Router<$Request, $Response> = Router();
+
+router.get('/', (req, res) => {
   res.render('index', { title: 'Express' });
 });
-
-module.exports = router;

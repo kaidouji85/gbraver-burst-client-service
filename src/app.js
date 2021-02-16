@@ -1,11 +1,14 @@
-var express = require('express');
+// @flow
+import express from 'express';
+import type {$Application, $Request, $Response} from 'express';
+
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 import {indexRouter} from './routes/index';
 
-var app = express();
+var app: $Application<$Request, $Response> = express();
 
 app.use(logger('dev'));
 app.use(express.json());

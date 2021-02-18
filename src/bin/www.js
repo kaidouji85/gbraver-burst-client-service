@@ -22,11 +22,7 @@ server.on('listening', onListening);
 function getPortFromEnv(): number | null {
   const port = parseInt(process.env.PORT, 10);
   const isValidPort = !isNaN(port) && (0 <= port);
-  if (isValidPort) {
-    return port;
-  }
-
-  return null;
+  return isValidPort ? port : null;
 }
 
 /**
@@ -38,11 +34,7 @@ function getPortFromEnv(): number | null {
 function getNamedPipeFromEnv(): string | null {
   const namedPipe: string = process.env.PORT ?? '';
   const isValidNamedPipe = namedPipe !== '';
-  if (isValidNamedPipe) {
-    return namedPipe;
-  }
-
-  return null;
+  return isValidNamedPipe ? namedPipe : null;
 }
 
 /**

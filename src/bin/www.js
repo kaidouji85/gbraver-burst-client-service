@@ -5,7 +5,7 @@ import http from 'http';
 
 const debug = Debug('gbraver-burst-client-service:server');
 
-const port = getPortOrNamedPipe();
+const port = getPortFromEnv() ?? getNamedPipeFromEnv() ?? 3000;
 app.set('port', port);
 
 const server = http.createServer(app);
@@ -14,28 +14,35 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 /**
- * 環境変数からポート、名前付きパイプを抽出する
+ * 環境変数からポート番号を取得する
+ * 正しいポート番号を取得できない場合はnullを返す
+ *
+ * @return 取得結果
  */
-function getPortOrNamedPipe(): number | string {
-  const defaultPort = 3000;
-
-  const envValue: string = process.env.PORT ?? '';
-  if (envValue === '') {
-    return defaultPort;
-  }
-
-  const port = parseInt(envValue, 10);
-  const isNamedPipe = isNaN(port);
-  if (isNamedPipe) {
-    return envValue;
-  }
-
+function getPortFromEnv(): number | null {
+  const port = parseInt(process.env.PORT, 10);
   const isValidPort = !isNaN(port) && (0 <= port);
   if (isValidPort) {
     return port;
   }
 
-  return defaultPort;
+  return null;
+}
+
+/**
+ * 環境変数から名前付きパイプを取得する
+ * 正しい名前付きパイプを取得できない場合はnullを返す
+ *
+ * @return 取得結果
+ */
+function getNamedPipeFromEnv(): string | null {
+  const namedPipe: string = process.env.PORT ?? '';
+  const isValidNamedPipe = namedPipe !== '';
+  if (isValidNamedPipe) {
+    return namedPipe;
+  }
+
+  return null;
 }
 
 /**

@@ -5,7 +5,7 @@ import http from 'http';
 
 const debug = Debug('gbraver-burst-client-service:server');
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = getPortOrNamedPipe();
 app.set('port', port);
 
 const server = http.createServer(app);
@@ -14,22 +14,28 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 /**
- * Normalize a port into a number, string, or false.
+ * 環境変数からポート、名前付きパイプを抽出する
  */
-function normalizePort(val) {
-  var port = parseInt(val, 10);
+function getPortOrNamedPipe(): number | string {
+  const defaultPort = 3000;
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
+  const envValue: string = process.env.PORT ?? '';
+  if (envValue === '') {
+    return defaultPort;
   }
 
-  if (port >= 0) {
-    // port number
+  const port = parseInt(envValue, 10);
+  const isNamedPipe = isNaN(port);
+  if (isNamedPipe) {
+    return envValue;
+  }
+
+  const isValidPort = !isNaN(port) && (0 <= port);
+  if (isValidPort) {
     return port;
   }
 
-  return false;
+  return defaultPort;
 }
 
 /**

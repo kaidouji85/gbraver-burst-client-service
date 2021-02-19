@@ -1,14 +1,32 @@
 {
-  "name": "study-express",
+  "name": "gbraver-burst-client-service",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "npm-run-all build serve",
+    "build": "npm-run-all clean type-check lint transpile",
+    "type-check": "flow check src",
+    "lint": "eslint src",
+    "transpile": "babel src/ -d build/",
+    "clean": "rimraf lib",
+    "serve": "node build/bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.16",
+    "@babel/core": "^7.12.16",
+    "@babel/preset-env": "^7.12.16",
+    "@babel/preset-flow": "^7.12.13",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.20.0",
+    "eslint-plugin-flowtype": "^5.2.1",
+    "flow-bin": "^0.144.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2"
   }
 }

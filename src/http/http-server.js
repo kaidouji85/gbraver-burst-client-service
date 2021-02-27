@@ -2,9 +2,10 @@
 import Debug from 'debug';
 import http from 'http';
 import type {$Application, $Request, $Response} from "express";
+import {getServerPort} from "./port";
 
 const debug = Debug('gbraver-burst:server');
-const port = getPortFromEnv() ?? getNamedPipeFromEnv() ?? 3000;
+const port = getServerPort();
 
 /**
  * HTTPサーバを生成する
@@ -21,30 +22,6 @@ export function httpServer(app: $Application<$Request, $Response>): http.Server 
     onListening(server.address());
   });
   return server;
-}
-
-/**
- * 環境変数からポート番号を取得する
- * 正しいポート番号を取得できない場合はnullを返す
- *
- * @return 取得結果
- */
-function getPortFromEnv(): number | null {
-  const port = parseInt(process.env.PORT, 10);
-  const isValidPort = !isNaN(port) && (0 <= port);
-  return isValidPort ? port : null;
-}
-
-/**
- * 環境変数から名前付きパイプを取得する
- * 正しい名前付きパイプを取得できない場合はnullを返す
- *
- * @return 取得結果
- */
-function getNamedPipeFromEnv(): string | null {
-  const namedPipe: string = process.env.PORT ?? '';
-  const isValidNamedPipe = namedPipe !== '';
-  return isValidNamedPipe ? namedPipe : null;
 }
 
 /**
@@ -75,7 +52,9 @@ function onError(error) {
 }
 
 /**
- * Event listener for HTTP server "listening" event.
+ * リスニング イベントハンドラ
+ *
+ * @param address HTTPサーバのアドレス
  */
 function onListening(address) {
   const bind = typeof address === 'string'

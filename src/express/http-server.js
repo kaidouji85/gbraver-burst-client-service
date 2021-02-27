@@ -8,7 +8,8 @@ const debug = Debug('gbraver-burst:server');
 const port = getServerPort();
 
 /**
- * HTTPサーバを生成する
+ * expressが利用するHTTPサーバを生成する
+ *
  * @param app expressアプリケーション
  * @return 生成結果
  */

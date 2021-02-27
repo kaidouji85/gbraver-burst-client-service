@@ -1,6 +1,6 @@
 // @flow
 
-import {httpServer} from "./http/http-server";
+import {httpServer} from "./express/http-server";
 import {app} from "./express/app";
 import {socketIOServer} from "./socket-io/socket-io-server";
 

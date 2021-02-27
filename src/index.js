@@ -1,8 +1,9 @@
 // @flow
 
-import {httpServer} from "./express/http-server";
-import {app} from "./express/app";
+import {expressApp} from "./express/app";
+import {expressHttpServer} from "./express/http-server";
 import {socketIOServer} from "./socket-io/socket-io-server";
 
-const http = httpServer(app);
-socketIOServer(http);
+const app = expressApp();
+const httpServer = expressHttpServer(app);
+socketIOServer(httpServer);

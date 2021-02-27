@@ -13,7 +13,7 @@ const port = getServerPort();
  * @param app expressアプリケーション
  * @return 生成結果
  */
-export function httpServer(app: $Application<$Request, $Response>): http.Server {
+export function expressHttpServer(app: $Application<$Request, $Response>): http.Server {
   app.set('port', port);
 
   const server = http.createServer(app);

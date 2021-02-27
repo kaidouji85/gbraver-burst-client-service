@@ -9,7 +9,7 @@
     "lint": "eslint src",
     "transpile": "babel src/ -d build/",
     "clean": "rimraf lib",
-    "serve": "node build/server/http/http-server"
+    "serve": "node build/index.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.5",

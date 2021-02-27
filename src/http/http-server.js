@@ -1,17 +1,17 @@
 // @flow
-import {app} from '../app';
+import {app} from '../express/app';
 import Debug from 'debug';
 import http from 'http';
 
-const debug = Debug('gbraver-burst-client-service:server');
+const debug = Debug('gbraver-burst:server');
 
 const port = getPortFromEnv() ?? getNamedPipeFromEnv() ?? 3000;
 app.set('port', port);
 
-const server = http.createServer(app);
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+const httpServer = http.createServer(app);
+httpServer.listen(port);
+httpServer.on('error', onError);
+httpServer.on('listening', onListening);
 
 /**
  * 環境変数からポート番号を取得する
@@ -68,7 +68,7 @@ function onError(error) {
  * Event listener for HTTP server "listening" event.
  */
 function onListening() {
-  var addr = server.address();
+  var addr = httpServer.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;

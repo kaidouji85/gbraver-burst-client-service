@@ -1,5 +1,5 @@
 {
-  "name": "gbraver-burst-client-service",
+  "name": "gbraver-burst-server",
   "version": "0.0.1",
   "private": true,
   "scripts": {

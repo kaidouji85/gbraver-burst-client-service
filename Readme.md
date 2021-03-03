@@ -7,6 +7,6 @@ GブレイバーバーストのAPIサーバです。
 
 ```shell
 cd <本リポジトリをcloneした場所>
-npm ci
-npm start
+yarn install
+yarn start
 ```
